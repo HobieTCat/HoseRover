@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RC Servo Control</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+  <body>
+    <h1>RC Servo Control</h1>
+    <div>
+      <label for="slider">Position:</label>
+      <input type="range" min="0" max="100" id="slider" oninput="sendPosition()" />
+      <span id="position"></span>
+    </div>
+    <div>
+      <img src="{{ url_for('video_feed') }}">
+    </div>
+	<div>
+		<p>GY-271 Compass: X=<span id="gy271_x">{{ x }}</span>, Y=<span id="gy271_y">{{ y }}</span>, Z=<span id="gy271_z">{{ z }}</span></p>
+	</div> 
+  <div>
+    <p>GPS Line=<span id="gpsLatitude">{{ gpsLat }}</span>,<span id="gpsLongitude">{{ gpsLong }}</span></p>
+  </div>   
+  <div>
+    <p>Current Time=<span id="theTime">{{ theTime }}</span></p>
+  </div> 
+	  <script>
+		$(document).ready(function() {
+		//  console.log("Updating GY-271 data...");
+		  setInterval(function() {
+			// console.log("Setting Interval...");
+			$.get("/data", function(data) {
+			  // console.log('Data:', data);
+        // console.log('GPS:', gpsLine);
+			  $("#gy271_x").html(data.x);
+			  $("#gy271_y").html(data.y);
+			  $("#gy271_z").html(data.z);
+        $("#gpsLatitude").html(data.gpsLat);
+        $("#gpsLongitude").html(data.gpsLong);
+        $("#theTime").html(data.theTime);
+			}, "json")
+			.fail(function() {
+  				console.log("Error fetching GY-271 data");
+			});
+		}, 1000);
+		});
+	
+	   
+      function sendPosition() {
+        var slider = document.getElementById("slider");
+        var position = slider.value;
+        var xhr = new XMLHttpRequest();
+        console.log("Updating Slider position");
+        xhr.open("POST", "/update");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("slider=" + position);
+        document.getElementById("position").textContent = position;
+      }
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
