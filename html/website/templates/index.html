@@ -29,7 +29,7 @@
 		  setInterval(function() {
 			// console.log("Setting Interval...");
 			$.get("/data", function(data) {
-			  // console.log('Data:', data);
+			  console.log('Data:', data);
         // console.log('GPS:', gpsLine);
 			  $("#gy271_x").html(data.x);
 			  $("#gy271_y").html(data.y);

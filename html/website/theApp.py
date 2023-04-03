@@ -83,7 +83,7 @@ def home():
 @app.route('/data')
 def data():
     x, y, z = read_gy_271()
-    # print('y=' , y) 
+    print('y=' , y) 
     data = ''
     while '$GPGLL' not in data:
         data += ser.read_until(b'\r\n').decode('utf-8').strip()   
@@ -120,7 +120,7 @@ def update():
     return ''
 
 if __name__ == '__main__':
-    app.run(debug=False, host="192.168.0.232")
+    app.run(debug=False, host="192.168.0.31")
 
 # Cleanup GPIO resources
 GPIO.cleanup()

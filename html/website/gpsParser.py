@@ -40,7 +40,7 @@ def getPositionData(data):
         
                 avg_latitude = sum(float(lats) for lats in latitudes) / len(latitudes)      
                 avg_latitude = round(avg_latitude,6)          
-                # avg_longitude = sum(float(lons) for lons in longitudes) / len(longitudes) 
+                avg_longitude = sum(float(lons) for lons in longitudes) / len(longitudes) 
                 avg_longitude = round(avg_longitude,6)  
 
                 # Return latitude and longitude data as a tuple
